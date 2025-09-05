@@ -15,43 +15,49 @@
       height: 100vh; 
       font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
       overflow: hidden;
+      background: #222; /* Match widget background */
+    }
+    .widget-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px; /* Fixed padding */
     }
     .widget {
       background: #222;
       color: #D4D4D4;
       border-radius: 12px;
-      padding: clamp(0.1rem, 0.5vw, 0.2rem);
-      width: 100vw;
-      height: 100vh;
+      width: 300px; /* Base width for scaling */
+      height: 200px; /* Base height for scaling */
+      max-width: 100%;
+      transform-origin: center center;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      border: none;
-      margin: 0;
+      padding: 10px; /* Padding inside the scaled element */
     }
     .clock-container {
       display: flex;
-      gap: clamp(0.1rem, 1.2vw, 0.6rem);
+      gap: 5px;
       align-items: center;
       justify-content: center;
       width: 100%;
-      flex-wrap: nowrap;
     }
     .time-section {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: clamp(0.2rem, 1vh, 0.5rem);
-      flex-shrink: 1;
+      gap: 5px;
     }
     .flip-container {
       position: relative;
-      width: clamp(2rem, 16vw, 8rem);
-      height: clamp(3rem, 24vw, 10rem);
+      width: 36px;
+      height: 48px;
       perspective: 1000px;
-      flex-shrink: 1;
     }
     .flip-card {
       position: relative;
@@ -69,11 +75,11 @@
       height: 100%;
       background: #333;
       border: 1px solid #444;
-      border-radius: clamp(3px, 1vw, 8px);
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(1.2rem, 12vw, 6rem);
+      font-size: 28px;
       font-weight: bold;
       color: #D4D4D4;
       backface-visibility: hidden;
@@ -85,61 +91,38 @@
       transform: rotateX(180deg);
     }
     .time-label {
-      font-size: clamp(0.4rem, 3vw, 1.2rem);
+      font-size: 8px;
       font-weight: 500;
       color: #999;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      white-space: nowrap;
     }
     .separator {
-      font-size: clamp(1rem, 10vw, 5rem);
+      font-size: 28px;
       font-weight: bold;
       color: #D4D4D4;
       animation: blink 2s infinite;
-      margin: 0 clamp(0.1rem, 0.8vw, 0.4rem);
-      line-height: 1;
-      flex-shrink: 0;
+      margin: 0 2px;
     }
     @keyframes blink {
       0%, 50% { opacity: 1; }
       51%, 100% { opacity: 0.3; }
     }
     .date-container {
-      margin-top: clamp(0.4rem, 4vh, 2rem);
+      margin-top: 12px;
       text-align: center;
-      width: 100%;
-      overflow: hidden;
     }
     .date {
-      font-size: clamp(0.6rem, 4vw, 1.8rem);
+      font-size: 12px;
       font-weight: 500;
       color: #D4D4D4;
-      margin-bottom: clamp(0.1rem, 1.5vh, 0.6rem);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin-bottom: 4px;
     }
     .day {
-      font-size: clamp(0.5rem, 3.5vw, 1.5rem);
+      font-size: 10px;
       color: #999;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    @media (max-width: 500px) {
-      .widget {
-        padding: clamp(0.1rem, 0.5vw, 0.3rem);
-        border-radius: 8px;
-      }
-      .clock-container {
-        gap: 0.3rem;
-      }
-      .separator {
-        margin: 0 0.2rem;
-      }
+      letter-spacing: 1px;
     }
   </style>
 </head>

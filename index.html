@@ -127,79 +127,81 @@
   </style>
 </head>
 <body>
-  <div class="widget">
-    <div class="clock-container">
-      <!-- Hours -->
-      <div class="time-section">
-        <div class="flip-container">
-          <div class="flip-card" id="hours-tens">
-            <div class="flip-face front" id="hours-tens-front">0</div>
-            <div class="flip-face back" id="hours-tens-back">0</div>
+  <div class="widget-container">
+    <div class="widget">
+      <div class="clock-container">
+        <!-- Hours -->
+        <div class="time-section">
+          <div class="flip-container">
+            <div class="flip-card" id="hours-tens">
+              <div class="flip-face front" id="hours-tens-front">0</div>
+              <div class="flip-face back" id="hours-tens-back">0</div>
+            </div>
           </div>
+          <div class="time-label">Hours</div>
         </div>
-        <div class="time-label">Hours</div>
-      </div>
-      
-      <div class="time-section">
-        <div class="flip-container">
-          <div class="flip-card" id="hours-ones">
-            <div class="flip-face front" id="hours-ones-front">0</div>
-            <div class="flip-face back" id="hours-ones-back">0</div>
+        
+        <div class="time-section">
+          <div class="flip-container">
+            <div class="flip-card" id="hours-ones">
+              <div class="flip-face front" id="hours-ones-front">0</div>
+              <div class="flip-face back" id="hours-ones-back">0</div>
+            </div>
           </div>
+          <div class="time-label">&nbsp;</div>
         </div>
-        <div class="time-label">&nbsp;</div>
+
+        <div class="separator">:</div>
+
+        <!-- Minutes -->
+        <div class="time-section">
+          <div class="flip-container">
+            <div class="flip-card" id="minutes-tens">
+              <div class="flip-face front" id="minutes-tens-front">0</div>
+              <div class="flip-face back" id="minutes-tens-back">0</div>
+            </div>
+          </div>
+          <div class="time-label">Minutes</div>
+        </div>
+        
+        <div class="time-section">
+          <div class="flip-container">
+            <div class="flip-card" id="minutes-ones">
+              <div class="flip-face front" id="minutes-ones-front">0</div>
+              <div class="flip-face back" id="minutes-ones-back">0</div>
+            </div>
+          </div>
+          <div class="time-label">&nbsp;</div>
+        </div>
+
+        <div class="separator">:</div>
+
+        <!-- Seconds -->
+        <div class="time-section">
+          <div class="flip-container">
+            <div class="flip-card" id="seconds-tens">
+              <div class="flip-face front" id="seconds-tens-front">0</div>
+              <div class="flip-face back" id="seconds-tens-back">0</div>
+            </div>
+          </div>
+          <div class="time-label">Seconds</div>
+        </div>
+        
+        <div class="time-section">
+          <div class="flip-container">
+            <div class="flip-card" id="seconds-ones">
+              <div class="flip-face front" id="seconds-ones-front">0</div>
+              <div class="flip-face back" id="seconds-ones-back">0</div>
+            </div>
+          </div>
+          <div class="time-label">&nbsp;</div>
+        </div>
       </div>
 
-      <div class="separator">:</div>
-
-      <!-- Minutes -->
-      <div class="time-section">
-        <div class="flip-container">
-          <div class="flip-card" id="minutes-tens">
-            <div class="flip-face front" id="minutes-tens-front">0</div>
-            <div class="flip-face back" id="minutes-tens-back">0</div>
-          </div>
-        </div>
-        <div class="time-label">Minutes</div>
+      <div class="date-container">
+        <div class="date" id="current-date"></div>
+        <div class="day" id="current-day"></div>
       </div>
-      
-      <div class="time-section">
-        <div class="flip-container">
-          <div class="flip-card" id="minutes-ones">
-            <div class="flip-face front" id="minutes-ones-front">0</div>
-            <div class="flip-face back" id="minutes-ones-back">0</div>
-          </div>
-        </div>
-        <div class="time-label">&nbsp;</div>
-      </div>
-
-      <div class="separator">:</div>
-
-      <!-- Seconds -->
-      <div class="time-section">
-        <div class="flip-container">
-          <div class="flip-card" id="seconds-tens">
-            <div class="flip-face front" id="seconds-tens-front">0</div>
-            <div class="flip-face back" id="seconds-tens-back">0</div>
-          </div>
-        </div>
-        <div class="time-label">Seconds</div>
-      </div>
-      
-      <div class="time-section">
-        <div class="flip-container">
-          <div class="flip-card" id="seconds-ones">
-            <div class="flip-face front" id="seconds-ones-front">0</div>
-            <div class="flip-face back" id="seconds-ones-back">0</div>
-          </div>
-        </div>
-        <div class="time-label">&nbsp;</div>
-      </div>
-    </div>
-
-    <div class="date-container">
-      <div class="date" id="current-date"></div>
-      <div class="day" id="current-day"></div>
     </div>
   </div>
 
@@ -260,10 +262,34 @@
     updateClock();
     setInterval(updateClock, 1000);
 
-    // Auto-resize on window resize for better iframe embedding
-    window.addEventListener('resize', () => {
-      // Trigger a re-render if needed
-    });
+    // Auto-scaling function
+    function autoScale() {
+      const widgetContainer = document.querySelector('.widget-container');
+      const widget = document.querySelector('.widget');
+      
+      const containerWidth = widgetContainer.offsetWidth;
+      const containerHeight = widgetContainer.offsetHeight;
+      
+      const baseWidth = widget.offsetWidth;
+      const baseHeight = widget.offsetHeight;
+      
+      const scaleX = containerWidth / baseWidth;
+      const scaleY = containerHeight / baseHeight;
+      
+      const scale = Math.min(scaleX, scaleY);
+      
+      widget.style.transform = `scale(${scale})`;
+    }
+
+    // Apply auto-scaling on load and resize
+    window.addEventListener('load', autoScale);
+    window.addEventListener('resize', autoScale);
+    
+    // Also check for container size changes (useful for embedded widgets)
+    if (window.ResizeObserver) {
+      const resizeObserver = new ResizeObserver(autoScale);
+      resizeObserver.observe(document.querySelector('.widget-container'));
+    }
   </script>
 </body>
 </html>

@@ -15,35 +15,23 @@
       height: 100vh; 
       font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
       overflow: hidden;
-      background: #222; /* Match widget background */
-    }
-    .widget-container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px; /* Fixed padding */
+      background: transparent; /* Make background transparent */
     }
     .widget {
       background: #222;
       color: #D4D4D4;
       border-radius: 12px;
-      width: 600px; /* Base width for scaling */
-      height: 300px; /* Base height for scaling */
-      max-width: 100%;
-      transform-origin: center center;
-      box-sizing: border-box;
+      width: 100%; /* Fill container */
+      height: 100%; /* Fill container */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 40px; /* Padding inside the scaled element */
-      min-width: 340px; /* Prevents excessive shrinking */
+      padding: 2vw; /* Use viewport units for padding */
     }
     .clock-container {
       display: flex;
-      gap: 10px;
+      gap: 1.5vw; /* Use viewport units */
       align-items: center;
       justify-content: center;
       width: 100%;
@@ -56,8 +44,10 @@
     }
     .flip-container {
       position: relative;
-      width: 72px;
-      height: 96px;
+      width: 12vw; /* Responsive width */
+      height: 16vw; /* Responsive height */
+      max-width: 72px;  /* Max size for large screens */
+      max-height: 96px; /* Max size for large screens */
       perspective: 1000px;
     }
     .flip-card {
@@ -75,145 +65,143 @@
       width: 100%;
       height: 100%;
       background: #333;
-      border: 2px solid #444;
+      border: 0.3vw solid #444; /* Responsive border */
       border-radius: 8px;
       display: flex;
-      align-items: center; /* Align to center */
+      align-items: center;
       justify-content: center;
-      font-size: 94px;
+      font-size: 14vw; /* Responsive font size */
       font-weight: 350;
       color: #D4D4D4;
       backface-visibility: hidden;
       line-height: 1;
-      padding-bottom: 6px; /* Fine-tune vertical alignment */
+      padding-bottom: 6px;
     }
  
     .time-label {
-      font-size: 12px;
+      font-size: 1.8vw; /* Responsive font size */
       font-weight: 500;
       color: #999;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
     .separator {
-      font-size: 56px;
+      font-size: 8vw; /* Responsive font size */
       font-weight: bold;
       color: #D4D4D4;
       animation: blink 2s infinite;
-      margin: 0 5px;
+      margin: 0 1vw;
     }
     @keyframes blink {
       0%, 50% { opacity: 1; }
       51%, 100% { opacity: 0.3; }
     }
     .date-container {
-      margin-top: 24px;
+      margin-top: 3vh; /* Use viewport height for spacing */
       text-align: center;
     }
     .date {
-      font-size: 24px;
+      font-size: 3.5vw; /* Responsive font size */
       font-weight: 500;
       color: #D4D4D4;
       margin-bottom: 8px;
-      white-space: nowrap;      /* Prevent wrapping */
-      overflow: hidden;         /* Hide overflow */
-      text-overflow: ellipsis;  /* Show ellipsis if clipped */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .day {
-      font-size: 20px;
+      font-size: 2.5vw; /* Responsive font size */
       color: #999;
       text-transform: uppercase;
-      letter-spacing: 10px;
+      letter-spacing: 1.5vw; /* Responsive letter spacing */
     }
     .ampm-container {
-      font-size: 32px;
+      font-size: 4vw; /* Responsive font size */
       font-weight: 500;
       color: #D4D4D4;
       align-self: flex-end;
-      padding-bottom: 10px; /* Align with bottom of flip cards */
-      width: 50px; /* Allocate space to prevent layout shift */
+      padding-bottom: 10px;
+      width: 8vw; /* Responsive width */
       text-align: left;
     }
   </style>
 </head>
 <body>
-  <div class="widget-container">
-    <div class="widget">
-      <div class="clock-container">
-        <!-- Hours -->
-        <div class="time-section">
-          <div class="flip-container">
-            <div class="flip-card" id="hours-tens">
-              <div class="flip-face front" id="hours-tens-front">0</div>
-              <div class="flip-face back" id="hours-tens-back">0</div>
-            </div>
+  <div class="widget">
+    <div class="clock-container">
+      <!-- Hours -->
+      <div class="time-section">
+        <div class="flip-container">
+          <div class="flip-card" id="hours-tens">
+            <div class="flip-face front" id="hours-tens-front">0</div>
+            <div class="flip-face back" id="hours-tens-back">0</div>
           </div>
-          <div class="time-label">Hours</div>
         </div>
-        
-        <div class="time-section">
-          <div class="flip-container">
-            <div class="flip-card" id="hours-ones">
-              <div class="flip-face front" id="hours-ones-front">0</div>
-              <div class="flip-face back" id="hours-ones-back">0</div>
-            </div>
+        <div class="time-label">Hours</div>
+      </div>
+      
+      <div class="time-section">
+        <div class="flip-container">
+          <div class="flip-card" id="hours-ones">
+            <div class="flip-face front" id="hours-ones-front">0</div>
+            <div class="flip-face back" id="hours-ones-back">0</div>
           </div>
-          <div class="time-label">&nbsp;</div>
         </div>
-
-        <div class="separator">:</div>
-
-        <!-- Minutes -->
-        <div class="time-section">
-          <div class="flip-container">
-            <div class="flip-card" id="minutes-tens">
-              <div class="flip-face front" id="minutes-tens-front">0</div>
-              <div class="flip-face back" id="minutes-tens-back">0</div>
-            </div>
-          </div>
-          <div class="time-label">Minutes</div>
-        </div>
-        
-        <div class="time-section">
-          <div class="flip-container">
-            <div class="flip-card" id="minutes-ones">
-              <div class="flip-face front" id="minutes-ones-front">0</div>
-              <div class="flip-face back" id="minutes-ones-back">0</div>
-            </div>
-          </div>
-          <div class="time-label">&nbsp;</div>
-        </div>
-
-        <div class="separator">:</div>
-
-        <!-- Seconds -->
-        <div class="time-section">
-          <div class="flip-container">
-            <div class="flip-card" id="seconds-tens">
-              <div class="flip-face front" id="seconds-tens-front">0</div>
-              <div class="flip-face back" id="seconds-tens-back">0</div>
-            </div>
-          </div>
-          <div class="time-label">Seconds</div>
-        </div>
-        
-        <div class="time-section">
-          <div class="flip-container">
-            <div class="flip-card" id="seconds-ones">
-              <div class="flip-face front" id="seconds-ones-front">0</div>
-              <div class="flip-face back" id="seconds-ones-back">0</div>
-            </div>
-          </div>
-          <div class="time-label">&nbsp;</div>
-        </div>
-
-        <div class="ampm-container" id="ampm-container"></div>
+        <div class="time-label">&nbsp;</div>
       </div>
 
-      <div class="date-container">
-        <div class="date" id="current-date"></div>
-        <div class="day" id="current-day"></div>
+      <div class="separator">:</div>
+
+      <!-- Minutes -->
+      <div class="time-section">
+        <div class="flip-container">
+          <div class="flip-card" id="minutes-tens">
+            <div class="flip-face front" id="minutes-tens-front">0</div>
+            <div class="flip-face back" id="minutes-tens-back">0</div>
+          </div>
+        </div>
+        <div class="time-label">Minutes</div>
       </div>
+      
+      <div class="time-section">
+        <div class="flip-container">
+          <div class="flip-card" id="minutes-ones">
+            <div class="flip-face front" id="minutes-ones-front">0</div>
+            <div class="flip-face back" id="minutes-ones-back">0</div>
+          </div>
+        </div>
+        <div class="time-label">&nbsp;</div>
+      </div>
+
+      <div class="separator">:</div>
+
+      <!-- Seconds -->
+      <div class="time-section">
+        <div class="flip-container">
+          <div class="flip-card" id="seconds-tens">
+            <div class="flip-face front" id="seconds-tens-front">0</div>
+            <div class="flip-face back" id="seconds-tens-back">0</div>
+          </div>
+        </div>
+        <div class="time-label">Seconds</div>
+      </div>
+      
+      <div class="time-section">
+        <div class="flip-container">
+          <div class="flip-card" id="seconds-ones">
+            <div class="flip-face front" id="seconds-ones-front">0</div>
+            <div class="flip-face back" id="seconds-ones-back">0</div>
+          </div>
+        </div>
+        <div class="time-label">&nbsp;</div>
+      </div>
+
+      <div class="ampm-container" id="ampm-container"></div>
+    </div>
+
+    <div class="date-container">
+      <div class="date" id="current-date"></div>
+      <div class="day" id="current-day"></div>
     </div>
   </div>
 
@@ -275,50 +263,13 @@
       setTimeout(() => {
         front.textContent = newValue;
         card.classList.remove('flipped');
-      }, 300);
+      }, 600); // Match transition duration
     }
 
     // Initialize clock
     updateClock();
     setInterval(updateClock, 1000);
 
-    // Auto-scaling function
-    let baseWidth = 0;
-    let baseHeight = 0;
-
-    function autoScale() {
-      const widgetContainer = document.querySelector('.widget-container');
-      const widget = document.querySelector('.widget');
-      
-      // Get base dimensions only once, before any transform is applied.
-      if (baseWidth === 0 || baseHeight === 0) {
-        baseWidth = widget.offsetWidth;
-        baseHeight = widget.offsetHeight;
-      }
-
-      // If dimensions are still 0, the layout isn't ready.
-      if (baseWidth === 0 || baseHeight === 0) return;
-
-      const containerWidth = widgetContainer.offsetWidth;
-      const containerHeight = widgetContainer.offsetHeight;
-      
-      const scaleX = containerWidth / baseWidth;
-      const scaleY = containerHeight / baseHeight;
-      
-      const scale = Math.min(scaleX, scaleY);
-      
-      widget.style.transform = `scale(${scale})`;
-    }
-
-    // Apply auto-scaling on load and resize
-    window.addEventListener('load', autoScale);
-    window.addEventListener('resize', autoScale);
-    
-    // Also check for container size changes (useful for embedded widgets)
-    if (window.ResizeObserver) {
-      const resizeObserver = new ResizeObserver(autoScale);
-      resizeObserver.observe(document.querySelector('.widget-container'));
-    }
   </script>
 </body>
 </html>

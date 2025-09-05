@@ -27,11 +27,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 2vw; /* Use viewport units for padding */
+      /* Add horizontal padding to keep content from the edges */
+      padding: 2vw 4vw; 
     }
     .clock-container {
       display: flex;
-      gap: 0.8vw; /* REDUCED: Further narrows the space */
+      gap: 1.5vw; /* Adjust gap for visual balance */
       align-items: center;
       justify-content: center;
       width: 100%;
@@ -44,10 +45,9 @@
     }
     .flip-container {
       position: relative;
-      width: 10vw; /* REDUCED: Makes each number container narrower */
-      height: 14vw; /* Adjusted for proportion */
-      max-width: 72px;  /* Max size for large screens */
-      max-height: 96px; /* Max size for large screens */
+      width: 11.5vw; /* Set width to fit within the padded container */
+      height: 15.5vw; /* Adjust height for proportion */
+      /* REMOVED max-width and max-height to allow scaling */
       perspective: 1000px;
     }
     .flip-card {
@@ -70,7 +70,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13vw; /* REDUCED: To better fit the smaller container */
+      font-size: 14vw; /* Adjust font size to fit new container size */
       font-weight: 350;
       transform: scaleX(0.80);
       color: #D4D4D4;
@@ -91,7 +91,7 @@
       font-weight: bold;
       color: #D4D4D4;
       animation: blink 2s infinite;
-      margin: 0; /* REMOVED: Spacing is now handled by the 'gap' property */
+      /* No margin needed, gap property handles spacing */
     }
     @keyframes blink {
       0%, 50% { opacity: 1; }

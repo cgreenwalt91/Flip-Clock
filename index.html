@@ -32,7 +32,7 @@
     }
     .clock-container {
       display: flex;
-      gap: 0vw; /* The space between each element */
+      gap: 1.1vw; /* The space between each element */
       align-items: center;
       justify-content: center;
       width: 100%;
@@ -49,7 +49,7 @@
     .flip-container {
       position: relative;
       width: 100%; /* Fill the flexible parent .time-section */
-      aspect-ratio: 3 / 4; /* Maintain shape automatically */
+      aspect-ratio: 3 / 5; /* Maintain shape automatically */
       perspective: 1000px;
     }
     .flip-card {
@@ -72,9 +72,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14vw; /* Adjust font size to fit new container size */
+      font-size: 18vw; /* Adjust font size to fit new container size */
       font-weight: 350;
-      transform: scaleX(0.80);
+      /* transform: scaleX(0.80); */ /* REMOVED: This caused the visual size mismatch */
       color: #D4D4D4;
       backface-visibility: hidden;
       line-height: 1;
@@ -89,8 +89,8 @@
       letter-spacing: 1px;
     }
     .separator {
-      font-size: 8vw; /* Responsive font size */
-      font-weight: bold;
+      font-size: 12vw; /* Responsive font size */
+      font-weight: regular;
       color: #D4D4D4;
       animation: blink 2s infinite;
       /* No margin needed, gap property handles spacing */

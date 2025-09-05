@@ -27,12 +27,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      /* Add horizontal padding to keep content from the edges */
-      padding: 2vw 4vw; 
+      /* Set padding. Content will live within this space. */
+      padding: 2vw 2vw; 
     }
     .clock-container {
       display: flex;
-      gap: 1.5vw; /* Adjust gap for visual balance */
+      gap: 1.5vw; /* The space between each element */
       align-items: center;
       justify-content: center;
       width: 100%;
@@ -42,12 +42,14 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      /* Make the number sections flexible to fill available space */
+      flex: 1 1 0;
+      min-width: 0; /* Allows flex items to shrink properly */
     }
     .flip-container {
       position: relative;
-      width: 11.5vw; /* Set width to fit within the padded container */
-      height: 15.5vw; /* Adjust height for proportion */
-      /* REMOVED max-width and max-height to allow scaling */
+      width: 100%; /* Fill the flexible parent .time-section */
+      aspect-ratio: 3 / 4; /* Maintain shape automatically */
       perspective: 1000px;
     }
     .flip-card {

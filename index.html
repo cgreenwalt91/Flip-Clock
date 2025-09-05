@@ -29,6 +29,7 @@
       align-items: center;
       /* Set padding. Content will live within this space. */
       padding: 2vw 2vw; 
+      position: relative; /* For positioning the toggle button */
     }
     .clock-container {
       display: flex;
@@ -45,6 +46,9 @@
       /* Make the number sections flexible to fill available space */
       flex: 1 1 0;
       min-width: 0; /* Allows flex items to shrink properly */
+
+      /* Define this element as a container for its children to query */
+      container-type: inline-size;
     }
     .flip-container {
       position: relative;
@@ -72,9 +76,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18vw; /* Adjust font size to fit new container size */
+      /* Set font-size relative to the container's width, not the viewport's */
+      font-size: 130cqi; 
       font-weight: 350;
-      /* transform: scaleX(0.80); */ /* REMOVED: This caused the visual size mismatch */
       color: #D4D4D4;
       backface-visibility: hidden;
       line-height: 1;
@@ -90,7 +94,7 @@
     }
     .separator {
       font-size: 12vw; /* Responsive font size */
-      font-weight: regular;
+      font-weight: normal;
       color: #D4D4D4;
       animation: blink 2s infinite;
       /* No margin needed, gap property handles spacing */
@@ -124,8 +128,39 @@
       color: #D4D4D4;
       align-self: flex-end;
       padding-bottom: 10px;
-      /* width: 8vw; */ /* REMOVED: This was pushing the content off-center */
       text-align: left;
+    }
+    /* Group for toggling seconds */
+    #seconds-group {
+      display: contents; /* Makes the div not affect layout, its children are direct flex items */
+    }
+    /* Toggle Button Styles */
+    .toggle-btn {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+    .widget:hover .toggle-btn {
+      opacity: 1;
+    }
+    .toggle-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+    /* Make the hiding rule more specific to override 'display: contents' */
+    #seconds-group.hidden {
+      display: none;
     }
   </style>
 </head>
@@ -176,27 +211,30 @@
         <div class="time-label">&nbsp;</div>
       </div>
 
-      <div class="separator">:</div>
+      <!-- Group for toggling seconds -->
+      <div id="seconds-group">
+        <div class="separator">:</div>
 
-      <!-- Seconds -->
-      <div class="time-section">
-        <div class="flip-container">
-          <div class="flip-card" id="seconds-tens">
-            <div class="flip-face front" id="seconds-tens-front">0</div>
-            <div class="flip-face back" id="seconds-tens-back">0</div>
+        <!-- Seconds -->
+        <div class="time-section">
+          <div class="flip-container">
+            <div class="flip-card" id="seconds-tens">
+              <div class="flip-face front" id="seconds-tens-front">0</div>
+              <div class="flip-face back" id="seconds-tens-back">0</div>
+            </div>
           </div>
+          <div class="time-label">Seconds</div>
         </div>
-        <div class="time-label">Seconds</div>
-      </div>
-      
-      <div class="time-section">
-        <div class="flip-container">
-          <div class="flip-card" id="seconds-ones">
-            <div class="flip-face front" id="seconds-ones-front">0</div>
-            <div class="flip-face back" id="seconds-ones-back">0</div>
+        
+        <div class="time-section">
+          <div class="flip-container">
+            <div class="flip-card" id="seconds-ones">
+              <div class="flip-face front" id="seconds-ones-front">0</div>
+              <div class="flip-face back" id="seconds-ones-back">0</div>
+            </div>
           </div>
+          <div class="time-label">&nbsp;</div>
         </div>
-        <div class="time-label">&nbsp;</div>
       </div>
 
       <div class="ampm-container" id="ampm-container"></div>
@@ -206,10 +244,21 @@
       <div class="date" id="current-date"></div>
       <div class="day" id="current-day"></div>
     </div>
+
+    <button id="toggle-seconds-btn" class="toggle-btn" title="Toggle Seconds">
+      <svg id="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+    </button>
   </div>
 
   <script>
     let previousTime = { hours: '', minutes: '', seconds: '' };
+    let isSecondsVisible = true;
+
+    const secondsGroup = document.getElementById('seconds-group');
+    const toggleBtn = document.getElementById('toggle-seconds-btn');
 
     function updateClock() {
       const now = new Date();
@@ -220,15 +269,19 @@
       
       const hours = String(h).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
       
       // Update time digits with flip animation
       updateDigit('hours-tens', hours[0], previousTime.hours[0]);
       updateDigit('hours-ones', hours[1], previousTime.hours[1]);
       updateDigit('minutes-tens', minutes[0], previousTime.minutes[0]);
       updateDigit('minutes-ones', minutes[1], previousTime.minutes[1]);
-      updateDigit('seconds-tens', seconds[0], previousTime.seconds[0]);
-      updateDigit('seconds-ones', seconds[1], previousTime.seconds[1]);
+
+      if (isSecondsVisible) {
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        updateDigit('seconds-tens', seconds[0], previousTime.seconds[0]);
+        updateDigit('seconds-ones', seconds[1], previousTime.seconds[1]);
+        previousTime.seconds = seconds;
+      }
 
       // Update AM/PM
       document.getElementById('ampm-container').textContent = ampm;
@@ -246,7 +299,8 @@
       document.getElementById('current-day').textContent = dayString;
 
       // Store current time for next comparison
-      previousTime = { hours, minutes, seconds };
+      previousTime.hours = hours;
+      previousTime.minutes = minutes;
     }
 
     function updateDigit(digitId, newValue, oldValue) {
@@ -268,6 +322,12 @@
         card.classList.remove('flipped');
       }, 300); // Match the new transition duration
     }
+
+    // Toggle seconds visibility
+    toggleBtn.addEventListener('click', () => {
+      isSecondsVisible = !isSecondsVisible;
+      secondsGroup.classList.toggle('hidden', !isSecondsVisible);
+    });
 
     // Initialize clock
     updateClock();

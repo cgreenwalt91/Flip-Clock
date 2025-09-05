@@ -279,15 +279,24 @@
     setInterval(updateClock, 1000);
 
     // Auto-scaling function
+    let baseWidth = 0;
+    let baseHeight = 0;
+
     function autoScale() {
       const widgetContainer = document.querySelector('.widget-container');
       const widget = document.querySelector('.widget');
       
+      // Get base dimensions only once, before any transform is applied.
+      if (baseWidth === 0 || baseHeight === 0) {
+        baseWidth = widget.offsetWidth;
+        baseHeight = widget.offsetHeight;
+      }
+
+      // If dimensions are still 0, the layout isn't ready.
+      if (baseWidth === 0 || baseHeight === 0) return;
+
       const containerWidth = widgetContainer.offsetWidth;
       const containerHeight = widgetContainer.offsetHeight;
-      
-      const baseWidth = widget.offsetWidth;
-      const baseHeight = widget.offsetHeight;
       
       const scaleX = containerWidth / baseWidth;
       const scaleY = containerHeight / baseHeight;

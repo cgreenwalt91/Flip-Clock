@@ -42,7 +42,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 1.5vh; /* Changed from 10px to a responsive unit */
       /* Make the number sections flexible to fill available space */
       flex: 1 1 0;
       min-width: 0; /* Allows flex items to shrink properly */
@@ -255,10 +255,17 @@
 
   <script>
     let previousTime = { hours: '', minutes: '', seconds: '' };
-    let isSecondsVisible = true;
-
+    
     const secondsGroup = document.getElementById('seconds-group');
     const toggleBtn = document.getElementById('toggle-seconds-btn');
+    const storageKey = 'flipClockSecondsVisible';
+
+    // Load the saved state from localStorage, defaulting to 'true' (visible) if not found.
+    let isSecondsVisible = localStorage.getItem(storageKey) !== 'false';
+
+    // Apply the initial state to the UI when the script loads
+    secondsGroup.classList.toggle('hidden', !isSecondsVisible);
+
 
     function updateClock() {
       const now = new Date();
@@ -323,10 +330,12 @@
       }, 300); // Match the new transition duration
     }
 
-    // Toggle seconds visibility
+    // Toggle seconds visibility and save the new state
     toggleBtn.addEventListener('click', () => {
       isSecondsVisible = !isSecondsVisible;
       secondsGroup.classList.toggle('hidden', !isSecondsVisible);
+      // Save the new state to localStorage
+      localStorage.setItem(storageKey, isSecondsVisible);
     });
 
     // Initialize clock
